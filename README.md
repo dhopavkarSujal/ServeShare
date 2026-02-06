@@ -154,14 +154,3 @@ ServeShare/
 ## 🙌 Conclusion
 
 ServeShare is a socially impactful project that uses technology to fight hunger and food wastage. It demonstrates how web applications can be used to create meaningful change in society.
-
----
-
-If you want, I can also:
-
-* Make it **shorter for college submission**
-* Customize it for **React + Node only**
-* Add **screenshots section**
-* Rewrite it in **simple exam-friendly language**
-
-Just tell me 😊
