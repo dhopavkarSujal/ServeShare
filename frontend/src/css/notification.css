@@ -1,0 +1,38 @@
+/* -----------Notification Button----------- */
+.notif-btn {
+  position: relative;
+}
+
+/* Badge */
+.notif-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* -----------Notification Modal----------- */
+.notif-modal {
+  max-width: 380px;
+}
+
+/* List */
+.notif-modal-list {
+  margin-top: 15px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notif-modal-list li {
+  padding: 10px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}

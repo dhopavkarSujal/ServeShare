@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* Global reset only for auth pages */
+.auth-wrapper * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Wrapper covers full height */
+.auth-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #e6edff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Layout Container */
+.auth-wrapper .auth-container {
+    width: 100%;
+    max-width: 1000px;
+    min-height: 550px;
+    background: #fff;
+    display: flex;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    transition: 0.3s ease;
+}
+
+/* LEFT PANEL */
+.auth-wrapper .left-section {
+    flex: 1;
+    background-color: #303054;
+    color: #fff;
+    padding: 50px 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.auth-wrapper .left-section h1 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.auth-wrapper .left-section p {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* RIGHT PANEL (form area) */
+.auth-wrapper .right-section {
+    flex: 1;
+    padding: 40px 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-wrapper .form-box {
+    width: 100%;
+    max-width: 380px;
+}
+
+.auth-wrapper .form-box h2 {
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    color: #303054;
+    text-align: center;
+}
+
+/* Input Fields */
+.auth-wrapper .form-group {
+    margin-bottom: 15px;
+}
+
+.auth-wrapper .form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #303054;
+}
+
+.auth-wrapper .form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.auth-wrapper .form-group input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 8px rgba(102,126,234,0.4);
+}
+
+/* Buttons */
+.auth-wrapper .btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #303054;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-wrapper .btn:hover {
+    background-color: #e6edff;
+    color: #303054;
+    border: 1.5px solid #303054;
+}
+
+/* Footer Links */
+.auth-wrapper .auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #303054;
+    font-size: 14px;
+}
+
+.auth-wrapper .auth-footer span {
+    color: #0056b3;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.auth-wrapper .auth-footer span:hover {
+    text-decoration: underline;
+}
+
+/* =======================================================================
+   RESPONSIVE — TABLETS
+   ======================================================================= */
+@media (max-width: 900px) {
+    .auth-wrapper .auth-container {
+        flex-direction: column;
+        max-width: 500px;
+    }
+
+    .auth-wrapper .left-section {
+        height: 200px;
+        padding: 20px;
+    }
+
+    .auth-wrapper .right-section {
+        padding: 30px 20px;
+    }
+
+    .auth-wrapper .left-section h1 {
+        font-size: 1.6rem;
+    }
+
+    .auth-wrapper .left-section p {
+        font-size: 0.9rem;
+    }
+}
+
+/* =======================================================================
+   RESPONSIVE — PHONES
+   ======================================================================= */
+@media (max-width: 600px) {
+    .auth-wrapper {
+        padding: 10px;
+    }
+
+    .auth-wrapper .auth-container {
+        border-radius: 8px;
+    }
+
+    .auth-wrapper .left-section {
+        display: none; /* Hide image/text section for small screens */
+    }
+
+    .auth-wrapper .right-section {
+        padding: 25px 15px;
+    }
+
+    .auth-wrapper .form-box h2 {
+        font-size: 1.5rem;
+    }
+
+    .auth-wrapper .btn {
+        padding: 10px;
+        font-size: 0.95rem;
+    }
+}

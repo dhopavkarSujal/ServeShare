@@ -1,0 +1,155 @@
+/* =========================================================
+   👤 PROFILE PAGE STYLES (ISOLATED)
+   Affects ONLY Profile page
+   ========================================================= */
+
+/* Wrapper */
+.profile-container {
+  display: flex;
+  gap: 30px;
+  align-items: stretch;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Profile Cards */
+.profile-container .profile-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 30px 28px;
+  flex: 1;
+  box-shadow: 0 6px 18px rgba(48, 48, 84, 0.15);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-container .profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(48, 48, 84, 0.25);
+}
+
+/* Avatar */
+.profile-container .profile-card img {
+  width: 110px;
+  height: 110px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  border: 4px solid #5b6fff;
+  box-shadow: 0 0 12px rgba(91, 111, 255, 0.35);
+}
+
+/* Name */
+.profile-container .profile-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #303054;
+  margin-bottom: 6px;
+}
+
+/* Email + Phone */
+.profile-container .profile-card p {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+/* Right Card (Form) */
+.profile-container .profile-info {
+  text-align: left;
+}
+
+/* Labels */
+.profile-container .profile-info label {
+  display: block;
+  font-weight: 600;
+  color: #303054;
+  margin-bottom: 6px;
+  margin-top: 16px;
+}
+
+/* Inputs */
+.profile-container .profile-info input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-container .profile-info input:focus {
+  border-color: #5b6fff;
+  box-shadow: 0 0 0 2px rgba(91, 111, 255, 0.18);
+}
+
+/* Edit Button */
+.profile-container #editProfileBtn {
+  margin-top: 22px;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #5b6fff, #9b5eff);
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.profile-container #editProfileBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(91, 111, 255, 0.4);
+}
+
+/* =========================================================
+   🌑 DARK MODE (Scoped)
+   ========================================================= */
+
+body.dark-mode .profile-container .profile-card {
+  background: linear-gradient(145deg, #1b1b2e, #12121f);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.55);
+}
+
+body.dark-mode .profile-container .profile-card h3 {
+  color: #e0e7ff;
+}
+
+body.dark-mode .profile-container .profile-card p {
+  color: #a1a1b5;
+}
+
+body.dark-mode .profile-container .profile-info label {
+  color: #d6d9f5;
+}
+
+body.dark-mode .profile-container .profile-info input {
+  background: rgba(20, 20, 35, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e0e7ff;
+}
+
+body.dark-mode .profile-container .profile-info input:focus {
+  border-color: #5b6fff;
+  box-shadow: 0 0 6px rgba(91, 111, 255, 0.45);
+}
+
+body.dark-mode .profile-container #editProfileBtn {
+  background: linear-gradient(90deg, #4f9cf9, #22d3ee);
+  box-shadow: 0 0 15px rgba(79, 156, 249, 0.35);
+}
+
+body.dark-mode .profile-container #editProfileBtn:hover {
+  box-shadow: 0 0 25px rgba(79, 156, 249, 0.55);
+}
+
+/* =========================================================
+   📱 RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 991px) {
+  .profile-container {
+    flex-direction: column;
+  }
+}
