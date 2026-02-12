@@ -10,43 +10,38 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          password: pass,
-        }),
-      });
+  try {
+    const res = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        email,
+        password: pass,
+      }),
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (!res.ok) {
-        alert(data.message || "Login failed");
-        return;
-      }
-
-      if (!data.token) {
-        alert("Invalid login response");
-        return;
-      }
-
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-
-      alert("Login successful");
-      navigate("/dashboard");
-    } catch (error) {
-      console.error(error);
-      alert("Server error. Try again later.");
-    } finally {
-      setLoading(false);
+    if (!res.ok) {
+      alert(data.message || "Login failed");
+      return;
     }
-  };
+
+    alert("Login successful");
+    navigate("/dashboard");
+
+  } catch (error) {
+    console.error(error);
+    alert("Server error. Try again later.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="auth-wrapper">

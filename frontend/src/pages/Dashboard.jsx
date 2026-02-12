@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
@@ -20,6 +21,7 @@ const DashboardHome = () => (
 );
 
 const Dashboard = () => {
+  const navigate = useNavigate(); 
   const [activePage, setActivePage] = useState("dashboard");
   const [showModal, setShowModal] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -30,7 +32,15 @@ const Dashboard = () => {
     "New NGO joined",
     "Donation request received"
   ]);
-
+  useEffect(() => {
+    fetch("http://localhost:5000/api/auth/check", {
+      credentials: "include",
+    }).then((res) => {
+      if (!res.ok) {
+        navigate("/login");
+      }
+    });
+  }, [navigate]);
 
   /* ----------- Dark Mode ----------- */
   useEffect(() => {

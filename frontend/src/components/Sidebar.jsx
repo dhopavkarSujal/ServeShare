@@ -1,7 +1,20 @@
+import { useNavigate } from "react-router-dom";
+
 const Sidebar = ({ activePage, setActivePage, sidebarOpen, closeSidebar }) => {
+  const navigate = useNavigate();
+
   const handleClick = (page) => {
     setActivePage(page);
-    closeSidebar(); // close sidebar on mobile after click
+    closeSidebar();
+  };
+
+  const handleLogout = async () => {
+    await fetch("http://localhost:5000/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    navigate("/login");
   };
 
   return (
@@ -50,7 +63,7 @@ const Sidebar = ({ activePage, setActivePage, sidebarOpen, closeSidebar }) => {
         </li>
       </ul>
 
-      <button className="logout sidebar-link">
+      <button className="logout sidebar-link" onClick={handleLogout}>
         <i className="fas fa-sign-out-alt"></i>
         Logout
       </button>
