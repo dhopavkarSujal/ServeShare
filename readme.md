@@ -1,6 +1,6 @@
-# ServeShare – Backend Service
+# ServeShare
 
-A scalable and modular REST API built with Node.js, Express, and MySQL for handling authentication and core backend operations of the ServeShare platform.
+A scalable and modular API built with Node.js, Express, and MySQL for handling authentication and core backend operations of the ServeShare platform.
 
 ---
 
