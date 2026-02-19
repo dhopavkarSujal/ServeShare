@@ -1,19 +1,13 @@
-import mysql from "mysql2";
+import mysql from "mysql2/promise";
 
-const db = mysql.createConnection({
+const db = await mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
   database: "serveshare",
-  port: 3307  
+  port: 3307
 });
 
-db.connect((err) => {
-  if (err) {
-    console.error("DB Error:", err);
-  } else {
-    console.log("MySQL Connected");
-  }
-});
+console.log("MySQL Connected");
 
 export default db;

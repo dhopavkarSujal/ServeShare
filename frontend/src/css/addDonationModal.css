@@ -11,10 +11,10 @@
 
 /* -----------Modal Box----------- */
 .modal-content {
-  background: #fff;
+  background-color: #fff !important;
   width: 100%;
   max-width: 420px;
-  border-radius: 14px;
+  border-radius: 14px !important;
   padding: 25px;
   position: relative;
   animation: scaleIn 0.25s ease;

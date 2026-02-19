@@ -27,20 +27,31 @@ const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
+  const [user, setUser] = useState(null);
   const [notifications] = useState([
     "Donation approved",
     "New NGO joined",
     "Donation request received"
   ]);
-  useEffect(() => {
-    fetch("http://localhost:5000/api/auth/check", {
-      credentials: "include",
-    }).then((res) => {
+useEffect(() => {
+  fetch("http://localhost:5000/api/auth/check", {
+    credentials: "include",
+  })
+    .then((res) => {
       if (!res.ok) {
         navigate("/login");
+        return;
       }
-    });
-  }, [navigate]);
+      return res.json();
+    })
+    .then((data) => {
+      if (data.user) {
+        setUser(data.user);
+      }
+    })
+    .catch(() => navigate("/login"));
+}, [navigate]);
+
 
   /* ----------- Dark Mode ----------- */
   useEffect(() => {
@@ -103,6 +114,7 @@ const Dashboard = () => {
       />
 
       <Header
+        username={user?.name}
         onAddDonation={() => setShowModal(true)}
         toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         toggleTheme={() => setDarkMode(!darkMode)}

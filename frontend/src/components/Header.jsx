@@ -1,4 +1,5 @@
 const Header = ({
+  username,
   onAddDonation,
   toggleSidebar,
   toggleTheme,
@@ -14,21 +15,20 @@ const Header = ({
         </button>
 
         <h1 className="welcome-text">
-          Welcome, <span className="username-highlight">User</span>
+          Welcome, <span className="username-highlight">
+            {username || "User"}
+          </span>
         </h1>
       </div>
 
       <div className="right-section">
-        {/* Theme toggle */}
         <button className="theme-btn btns" onClick={toggleTheme}>
           <i className={`fas ${darkMode ? "fa-sun" : "fa-moon"}`}></i>
         </button>
 
-        {/* Notifications */}
         <button
           className="notif-btn btns"
           onClick={openNotifications}
-          title="Notifications"
         >
           <i className="fas fa-bell"></i>
           {notifCount > 0 && (
@@ -36,7 +36,6 @@ const Header = ({
           )}
         </button>
 
-        {/* Add Donation */}
         <button className="add-btn btns" onClick={onAddDonation}>
           <i className="fas fa-plus"></i> Add Donation
         </button>

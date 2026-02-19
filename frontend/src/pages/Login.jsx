@@ -9,7 +9,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+const handleLogin = async (e) => {
   e.preventDefault();
   setLoading(true);
 
@@ -31,8 +31,18 @@ function Login() {
       return;
     }
 
-    alert("Login successful");
-    navigate("/dashboard");
+    const role = data.user.role;
+
+    // 🔥 Redirect based on role
+    if (role === "admin") {
+      navigate("/admin-dashboard");
+    } 
+    else if (role === "ngo") {
+      navigate("/ngo-dashboard");
+    } 
+    else {
+      navigate("/dashboard");
+    }
 
   } catch (error) {
     console.error(error);
@@ -41,7 +51,6 @@ function Login() {
     setLoading(false);
   }
 };
-
 
   return (
     <div className="auth-wrapper">

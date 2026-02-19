@@ -1,4 +1,22 @@
+import { useEffect, useState } from "react";
+
 const RecentDonations = () => {
+  const [donations, setDonations] = useState([]);
+
+  useEffect(() => {
+    fetchDonations();
+  }, []);
+
+  const fetchDonations = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/donations");
+      const data = await res.json();
+      setDonations(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <main className="donations-section">
       <h2>Recent Donations</h2>
@@ -9,64 +27,26 @@ const RecentDonations = () => {
             <tr>
               <th>Sr. No.</th>
               <th>Donation Type</th>
-              <th>Item Type</th>
               <th>Quantity</th>
-              <th>Amount (₹)</th>
-              <th>Location</th>
+              <th>Amount</th>
               <th>Status</th>
             </tr>
           </thead>
 
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Food</td>
-              <td>Rice</td>
-              <td>10 kg</td>
-              <td>—</td>
-              <td>Mumbai</td>
-              <td><span className="status pending">Pending</span></td>
-            </tr>
-
-            <tr>
-              <td>2</td>
-              <td>Clothes</td>
-              <td>Jackets</td>
-              <td>5</td>
-              <td>—</td>
-              <td>Pune</td>
-              <td><span className="status approved">Approved</span></td>
-            </tr>
-
-            <tr>
-              <td>3</td>
-              <td>Books</td>
-              <td>School Books</td>
-              <td>20</td>
-              <td>—</td>
-              <td>Nagpur</td>
-              <td><span className="status pending">Pending</span></td>
-            </tr>
-
-            <tr>
-              <td>4</td>
-              <td>Funds</td>
-              <td>—</td>
-              <td>—</td>
-              <td>5,000</td>
-              <td>Mumbai</td>
-              <td><span className="status approved">Approved</span></td>
-            </tr>
-
-            <tr>
-              <td>5</td>
-              <td>Food</td>
-              <td>Vegetables</td>
-              <td>15 kg</td>
-              <td>—</td>
-              <td>Thane</td>
-              <td><span className="status pending">Pending</span></td>
-            </tr>
+            {donations.map((donation, index) => (
+              <tr key={donation.id}>
+                <td>{index + 1}</td>
+                <td>{donation.donation_type}</td>
+                <td>{donation.quantity || "—"}</td>
+                <td>{donation.amount || "—"}</td>
+                <td>
+                  <span className={`status ${donation.status.toLowerCase()}`}>
+                    {donation.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
