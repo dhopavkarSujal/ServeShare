@@ -1,4 +1,5 @@
 import express from "express";
+import db from "../config/db.js";
 import { login, register, logout } from "../controllers/auth_controller.js";
 import authMiddleware from "../middleware/auth_middleware.js";
 
@@ -21,4 +22,12 @@ router.get("/check", authMiddleware, (req, res) => {
   });
 });
 
+router.get("/notifications", authMiddleware, async (req, res) => {
+  const [rows] = await db.query(
+    "SELECT * FROM notifications WHERE user_id=? ORDER BY created_at DESC",
+    [req.session.userId]
+  );
+
+  res.json(rows);
+});
 export default router;

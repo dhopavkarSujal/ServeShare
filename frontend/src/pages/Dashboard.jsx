@@ -13,10 +13,10 @@ import Profile from "./Profile";
 import "../css/dashboard.css";
 import "../css/profile.css";
 
-const DashboardHome = () => (
+const DashboardHome = ({ donations }) => (
   <>
-    <StatsCards />
-    <RecentDonations />
+    <StatsCards donations={donations} />
+    <RecentDonations donations={donations} />
   </>
 );
 
@@ -28,11 +28,8 @@ const Dashboard = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
   const [user, setUser] = useState(null);
-  const [notifications] = useState([
-    "Donation approved",
-    "New NGO joined",
-    "Donation request received"
-  ]);
+  const [donations, setDonations] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 useEffect(() => {
   fetch("http://localhost:5000/api/auth/check", {
     credentials: "include",
@@ -52,7 +49,31 @@ useEffect(() => {
     .catch(() => navigate("/login"));
 }, [navigate]);
 
+  useEffect(() => {
+  const fetchNotifications = () => {
+    fetch("http://localhost:5000/api/auth/notifications", {
+      credentials: "include",
+    })
+      .then(res => res.json())
+      .then(data => setNotifications(data))
+      .catch(err => console.error(err));
+  };
 
+  fetchNotifications();
+
+  const interval = setInterval(fetchNotifications, 5000); // every 5 sec
+
+  return () => clearInterval(interval);
+}, []);
+
+  useEffect(() => {
+  fetch("http://localhost:5000/api/donations/my", {
+    credentials: "include",
+  })
+    .then(res => res.json())
+    .then(data => setDonations(data))
+    .catch(err => console.error(err));
+}, []);
   /* ----------- Dark Mode ----------- */
   useEffect(() => {
     document.body.classList.toggle("dark", darkMode);
@@ -100,7 +121,7 @@ useEffect(() => {
       case "profile":
         return <Profile />;
       default:
-        return <DashboardHome />;
+        return <DashboardHome donations={donations} />;
     }
   };
 
@@ -127,7 +148,16 @@ useEffect(() => {
       </main>
 
       {showModal && (
-        <AddDonationModal onClose={() => setShowModal(false)} />
+        <AddDonationModal 
+          onClose={() => {
+            setShowModal(false);
+            fetch("http://localhost:5000/api/donations/my", {
+              credentials: "include",
+            })
+              .then(res => res.json())
+              .then(data => setDonations(data));
+          }} 
+        />
       )}
 
       {showNotif && (

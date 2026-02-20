@@ -4,14 +4,25 @@ const RecentDonations = () => {
   const [donations, setDonations] = useState([]);
 
   useEffect(() => {
-    fetchDonations();
+    fetchRecentDonations();
   }, []);
 
-  const fetchDonations = async () => {
+  const fetchRecentDonations = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/donations");
+      const res = await fetch("http://localhost:5000/api/donations/my", {
+        credentials: "include", // 🔥 Important
+      });
+
       const data = await res.json();
-      setDonations(data);
+
+      // Sort newest first (if not already sorted)
+      const sorted = data.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+
+      // Take only first 5
+      setDonations(sorted.slice(0, 5));
+
     } catch (err) {
       console.error(err);
     }
@@ -34,19 +45,25 @@ const RecentDonations = () => {
           </thead>
 
           <tbody>
-            {donations.map((donation, index) => (
-              <tr key={donation.id}>
-                <td>{index + 1}</td>
-                <td>{donation.donation_type}</td>
-                <td>{donation.quantity || "—"}</td>
-                <td>{donation.amount || "—"}</td>
-                <td>
-                  <span className={`status ${donation.status.toLowerCase()}`}>
-                    {donation.status}
-                  </span>
-                </td>
+            {donations.length === 0 ? (
+              <tr>
+                <td colSpan="5">No recent donations</td>
               </tr>
-            ))}
+            ) : (
+              donations.map((donation, index) => (
+                <tr key={donation.id}>
+                  <td>{index + 1}</td>
+                  <td>{donation.donation_type}</td>
+                  <td>{donation.quantity || "—"}</td>
+                  <td>{donation.amount || "—"}</td>
+                  <td>
+                    <span className={`status ${donation.status}`}>
+                      {donation.status}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

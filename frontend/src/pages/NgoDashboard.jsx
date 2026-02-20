@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import DashboardLayout from "../components/DashboardLayout";
 
 function NgoDashboard() {
   const [donations, setDonations] = useState([]);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 🔐 Check session & role first
     fetch("http://localhost:5000/api/auth/check", {
       credentials: "include",
     })
@@ -21,7 +22,8 @@ function NgoDashboard() {
         if (!data.user || data.user.role !== "ngo") {
           navigate("/login");
         } else {
-          // ✅ Fetch approved donations for NGO
+          setUser(data.user);
+
           fetch("http://localhost:5000/api/donations/approved", {
             credentials: "include",
           })
@@ -31,14 +33,6 @@ function NgoDashboard() {
       })
       .catch(() => navigate("/login"));
   }, [navigate]);
-
-  const handleLogout = async () => {
-    await fetch("http://localhost:5000/api/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-    navigate("/login");
-  };
 
   const handleClaim = (id) => {
     fetch(`http://localhost:5000/api/donations/claim/${id}`, {
@@ -50,19 +44,19 @@ function NgoDashboard() {
   };
 
   return (
-    <div>
+    <DashboardLayout user={user}>
       <h2>NGO Dashboard</h2>
 
-      <button onClick={handleLogout}>Logout</button>
-
       {donations.map((donation) => (
-        <div key={donation.id}>
+        <div key={donation.id} className="donation-card">
           <h4>{donation.title}</h4>
           <p>{donation.description}</p>
-          <button onClick={() => handleClaim(donation.id)}>Claim</button>
+          <button onClick={() => handleClaim(donation.id)}>
+            Claim
+          </button>
         </div>
       ))}
-    </div>
+    </DashboardLayout>
   );
 }
 

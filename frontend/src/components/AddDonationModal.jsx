@@ -47,11 +47,9 @@ const handleSubmit = async (e) => {
   try {
     const response = await fetch("http://localhost:5000/api/donations", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
-        userId: 1,
         donationType,
         quantity,
         amount,

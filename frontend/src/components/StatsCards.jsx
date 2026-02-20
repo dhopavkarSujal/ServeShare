@@ -1,27 +1,17 @@
-const StatsCards = ({ donations = [] }) => {
+function StatsCards({ donations }) {
 
-  const total = donations.length;
-  const pending = donations.filter(d => d.status === "Pending").length;
-  const completed = donations.filter(d => d.status === "Completed").length;
+const total = donations.length;
+const pending = donations.filter(d => d.status === "pending").length;
+const approved = donations.filter(d => d.status === "approved").length;
+const rejected = donations.filter(d => d.status === "rejected").length;
 
   return (
-    <div className="cards-grid">
-      <div className="card">
-        <h3>Total Donations</h3>
-        <p>{total}</p>
-      </div>
-
-      <div className="card">
-        <h3>Pending</h3>
-        <p>{pending}</p>
-      </div>
-
-      <div className="card">
-        <h3>Completed</h3>
-        <p>{completed}</p>
-      </div>
+    <div className="stats-container">
+      <div className="card">Total: {total}</div>
+      <div className="card">Pending: {pending}</div>
+      <div className="card">Approved: {approved}</div>
+      <div className="card">Rejected: {rejected}</div>
     </div>
   );
-};
-
+}
 export default StatsCards;

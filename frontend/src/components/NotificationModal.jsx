@@ -17,8 +17,10 @@ const NotificationModal = ({ onClose, notifications = [] }) => {
           {notifications.length === 0 ? (
             <p>No new notifications</p>
           ) : (
-            notifications.map((notif, index) => (
-              <li key={index}>{notif}</li>
+            notifications.map((notif) => (
+              <li key={notif.id}>
+                {notif.message}
+              </li>
             ))
           )}
         </ul>

@@ -1,27 +1,29 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import AdminHeader from "../components/AdminHeader";
+import AdminSidebar from "../components/AdminSidebar";
+import ManageUsers from "./ManageUsers";
+import ManageNgos from "./ManageNgos";
 function AdminDashboard() {
   const [donations, setDonations] = useState([]);
+  const [user, setUser] = useState(null);
+  const [activePage, setActivePage] = useState("donations");
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 🔐 Check session & role first
     fetch("http://localhost:5000/api/auth/check", {
       credentials: "include",
     })
       .then((res) => {
-        if (!res.ok) {
-          navigate("/login");
-          return;
-        }
+        if (!res.ok) navigate("/login");
         return res.json();
       })
       .then((data) => {
         if (!data.user || data.user.role !== "admin") {
           navigate("/login");
         } else {
-          // ✅ Fetch pending donations only if admin
+          setUser(data.user);
+
           fetch("http://localhost:5000/api/donations/pending", {
             credentials: "include",
           })
@@ -32,48 +34,101 @@ function AdminDashboard() {
       .catch(() => navigate("/login"));
   }, [navigate]);
 
-  const handleLogout = async () => {
-    await fetch("http://localhost:5000/api/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-    navigate("/login");
-  };
-
-  const handleApprove = (id) => {
-    fetch(`http://localhost:5000/api/donations/approve/${id}`, {
+  const handleApprove = async (id) => {
+    await fetch(`http://localhost:5000/api/donations/approve/${id}`, {
       method: "PUT",
       credentials: "include",
-    }).then(() => {
-      setDonations(donations.filter((d) => d.id !== id));
     });
+
+    setDonations(donations.filter((d) => d.id !== id));
   };
 
-  const handleReject = (id) => {
-    fetch(`http://localhost:5000/api/donations/reject/${id}`, {
+  const handleReject = async (id) => {
+    await fetch(`http://localhost:5000/api/donations/reject/${id}`, {
       method: "PUT",
       credentials: "include",
-    }).then(() => {
-      setDonations(donations.filter((d) => d.id !== id));
     });
-  };
 
+    setDonations(donations.filter((d) => d.id !== id));
+  };
   return (
-    <div>
-      <h2>Admin Dashboard</h2>
+      <div className="dashboard-container">
 
-      <button onClick={handleLogout}>Logout</button>
+        <AdminSidebar
+          activePage={activePage}
+          setActivePage={setActivePage}
+        />
 
-      {donations.map((donation) => (
-        <div key={donation.id}>
-          <h4>{donation.title}</h4>
-          <p>{donation.description}</p>
-          <button onClick={() => handleApprove(donation.id)}>Approve</button>
-          <button onClick={() => handleReject(donation.id)}>Reject</button>
+        <div className="main-content">
+          <AdminHeader user={user} />
+
+          <div className="dashboard-body">
+
+            {activePage === "donations" && (
+              <>
+                <h2>Pending Donations</h2>
+
+    {donations.length === 0 ? (
+      <p>No pending donations.</p>
+    ) : (
+      <div className="table-container">
+        <table className="donation-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+              <th>Expiry</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {donations.map((donation) => (
+              <tr key={donation.id}>
+                <td>{donation.id}</td>
+                <td>{donation.description}</td>
+                <td>{donation.donation_type}</td>
+                <td>{donation.quantity || "-"}</td>
+                <td>
+                  {donation.amount ? `₹${donation.amount}` : "-"}
+                </td>
+                <td>{donation.expiry_date || "-"}</td>
+
+                <td>
+                  <button
+                    className="approve-btn"
+                    onClick={() => handleApprove(donation.id)}
+                  >
+                    Accept
+                  </button>
+
+                  <button
+                    className="reject-btn"
+                    onClick={() => handleReject(donation.id)}
+                  >
+                    Reject
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </>
+)}
+
+            {activePage === "users" && <ManageUsers />}
+            {activePage === "ngos" && <ManageNgos />}
+
+          </div>
         </div>
-      ))}
-    </div>
-  );
-}
+
+      </div>
+    );
+    }
 
 export default AdminDashboard;

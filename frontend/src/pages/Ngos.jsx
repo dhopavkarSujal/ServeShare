@@ -1,4 +1,14 @@
+import { useEffect, useState } from "react";
+
 const Ngos = () => {
+  const [ngos, setNgos] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/ngos")
+      .then(res => res.json())
+      .then(data => setNgos(data));
+  }, []);
+
   return (
     <main className="dashboard-body">
       <h1>Registered NGOs</h1>
@@ -16,13 +26,21 @@ const Ngos = () => {
           </thead>
 
           <tbody>
-            <tr>
-              <td>Shree Sai Seva Sanstha</td>
-              <td>Food / Education</td>
-              <td>Bhiwandi</td>
-              <td>08511-406126</td>
-              <td>Women & children welfare</td>
-            </tr>
+            {ngos.length === 0 ? (
+              <tr>
+                <td colSpan="5">No NGOs Registered</td>
+              </tr>
+            ) : (
+              ngos.map((ngo) => (
+                <tr key={ngo.id}>
+                  <td>{ngo.ngo_name}</td>
+                  <td>{ngo.donation_type}</td>
+                  <td>{ngo.location}</td>
+                  <td>{ngo.contact}</td>
+                  <td>{ngo.summary}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
