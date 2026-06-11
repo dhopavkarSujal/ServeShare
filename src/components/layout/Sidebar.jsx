@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 
 import ServeShareLogo from "../ServeShareLogo";
-import "../../css/sidebar.css";
+import "../../css/Sidebar.css";
 
 const sidebarMenus = {
   user: [
