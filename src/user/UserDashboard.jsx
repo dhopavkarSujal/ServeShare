@@ -21,6 +21,33 @@ export default function UserDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const quickActions = [
+    {
+      icon: "🎁",
+      title: "Donate Items",
+      subtitle: "Create a new donation request",
+      onClick: () => navigate("/user/create-donation"),
+    },
+    {
+      icon: "📍",
+      title: "Find NGOs",
+      subtitle: "Browse nearby verified organizations",
+      onClick: () => navigate("/user/ngos"),
+    },
+    {
+      icon: "📊",
+      title: "Track Donations",
+      subtitle: "Review status and impact",
+      onClick: () => navigate("/user/donations"),
+    },
+    {
+      icon: "❓",
+      title: "Help",
+      subtitle: "Open support and contact options",
+      onClick: () => navigate("/user/help"),
+    },
+  ];
+
   const loadDashboard = async () => {
     if (!user) return;
 
@@ -203,36 +230,18 @@ export default function UserDashboard() {
         <div className="premium-card">
           <h3>Quick Actions</h3>
 
-          <div
-            className="quick-action"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/user/create-donation")}
-          >
-            🎁 Donate Items
-          </div>
-
-          <div
-            className="quick-action"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/user/ngos")}
-          >
-            📍 Find NGOs
-          </div>
-
-          <div
-            className="quick-action"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/user/donations")}
-          >
-            📊 Track Donations
-          </div>
-
-          <div
-            className="quick-action"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/user/help")}
-          >
-            ❓ Help
+          <div className="quick-action-list">
+            {quickActions.map((action) => (
+              <button key={action.title} type="button" className="quick-action" onClick={action.onClick}>
+                <span className="quick-action-icon" aria-hidden="true">
+                  {action.icon}
+                </span>
+                <span className="quick-action-copy">
+                  <strong>{action.title}</strong>
+                  <small>{action.subtitle}</small>
+                </span>
+              </button>
+            ))}
           </div>
         </div>
 

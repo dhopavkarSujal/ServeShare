@@ -29,7 +29,21 @@
     margin-left: 0 !important;
   }
 
+  .layout-main.mobile-open {
+    margin-left: 0 !important;
+  }
+
   .layout-content {
     padding: 16px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .layout-main {
+    margin-left: var(--sidebar-collapsed-w);
+  }
+
+  .layout-main.collapsed {
+    margin-left: var(--sidebar-collapsed-w);
   }
 }

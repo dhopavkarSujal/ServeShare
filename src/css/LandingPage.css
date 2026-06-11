@@ -1,0 +1,141 @@
+.landing-page {
+  overflow-x: hidden;
+}
+
+.landing-navbar,
+.landing-hero,
+.landing-stats,
+.landing-features,
+.landing-steps,
+.landing-impact,
+.landing-cta,
+.landing-footer {
+  width: 100%;
+}
+
+@media (max-width: 1279px) {
+  .landing-hero-grid,
+  .landing-impact-grid,
+  .landing-footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .landing-cta-inner {
+    gap: 24px !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .landing-navbar {
+    padding: 0 20px !important;
+  }
+
+  .landing-nav-links {
+    display: none !important;
+  }
+
+  .landing-hero {
+    padding: 64px 20px 80px !important;
+  }
+
+  .landing-hero-grid {
+    gap: 36px !important;
+  }
+
+  .landing-hero-visual {
+    order: -1;
+  }
+
+  .landing-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+  }
+
+  .landing-features,
+  .landing-steps,
+  .landing-impact {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .landing-impact-grid {
+    gap: 36px !important;
+  }
+
+  .landing-footer {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .landing-footer-grid {
+    gap: 28px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .landing-navbar {
+    padding: 0 16px !important;
+    gap: 12px !important;
+  }
+
+  .landing-nav-actions {
+    gap: 8px !important;
+  }
+
+  .landing-hero {
+    padding: 48px 16px 64px !important;
+  }
+
+  .landing-hero-grid,
+  .landing-stats-grid,
+  .landing-impact-grid,
+  .landing-footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .landing-hero-actions,
+  .landing-cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .landing-hero-actions > button,
+  .landing-cta-actions > button {
+    width: 100%;
+  }
+
+  .landing-stats {
+    padding: 28px 16px !important;
+  }
+
+  .landing-stats-grid,
+  .landing-features-grid,
+  .landing-steps-grid,
+  .landing-impact-grid,
+  .landing-footer-grid {
+    gap: 20px !important;
+  }
+
+  .landing-features,
+  .landing-steps,
+  .landing-impact {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+
+  .landing-cta {
+    margin: 0 16px 64px !important;
+    padding: 32px 20px !important;
+    border-radius: 22px !important;
+  }
+
+  .landing-cta-inner {
+    gap: 18px !important;
+  }
+
+  .landing-footer {
+    padding-top: 44px !important;
+    padding-bottom: 28px !important;
+  }
+}

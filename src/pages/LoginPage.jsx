@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Heart } from "lucide-react";
+import { Building2, ShieldCheck, User, Mail } from "lucide-react";
+import AuthLayout, { AuthPasswordField, AuthRoleTabs, AuthSocialButton, AuthTextField } from "../components/auth/AuthLayout";
 import { useAuth } from "../config/context/AuthContext";
 import "../css/auth.css";
 
@@ -13,8 +14,15 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [popup, setPopup] = useState({ show: false, type: "", message: "" });
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const closePopup = () => setPopup({ show: false, type: "", message: "" });
+
+  const roleOptions = [
+    { value: "user", label: "User", icon: User },
+    { value: "ngo", label: "NGO", icon: Building2 },
+    { value: "admin", label: "Admin", icon: ShieldCheck },
+  ];
 
   useEffect(() => {
     if (!error) return;
@@ -27,27 +35,30 @@ export default function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    const nextErrors = {};
+    if (!email.trim()) nextErrors.email = "Email is required.";
+    if (!password.trim()) nextErrors.password = "Password is required.";
+
+    setFieldErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) {
+      return;
+    }
+
     const res = await login({ email, password, selectedRole });
 
-    console.log("Login response:", res);
-
     if (res.success) {
-      // Navigate directly using redirectTo from login response
       navigate(res.redirectTo, { replace: true });
       return;
     }
 
     if (res.error) {
-      setPopup({
-        show: true,
-        type: "error",
-        message: res.error,
-      });
+      setPopup({ show: true, type: "error", message: res.error });
     }
   };
 
   return (
-    <div className="auth-page">
+    <>
       {popup.show && (
         <div className={`auth-popup ${popup.type}`}>
           <span>{popup.message}</span>
@@ -57,80 +68,41 @@ export default function LoginPage() {
         </div>
       )}
 
-      <div className="card page-enter auth-card">
-        <div className="auth-left">
-          <div className="auth-orb auth-orb-top" />
-          <div className="auth-orb auth-orb-bottom" />
+      <AuthLayout variant="login" title="Welcome back" subtitle="Login to continue your journey">
+        <form className="form-stack" onSubmit={handleLogin}>
+          <AuthRoleTabs options={roleOptions} selected={selectedRole} onChange={setSelectedRole} />
 
-          <div className="auth-left-content">
-            <div className="auth-icon-wrap">
-              <Heart size={24} fill="white" />
-            </div>
+          <AuthTextField
+            label="Email Address"
+            type="email"
+            placeholder="Enter your email"
+            icon={Mail}
+            value={email}
+            autoComplete="email"
+            error={fieldErrors.email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (fieldErrors.email) {
+                setFieldErrors((prev) => ({ ...prev, email: "" }));
+              }
+            }}
+          />
 
-            <h2 className="auth-left-title">
-              Together, we can make a difference
-            </h2>
-
-            <p className="auth-left-desc">
-              ServeShare connects generous hearts with those who need support.
-            </p>
-
-            <div className="auth-emoji">🤝</div>
-          </div>
-        </div>
-
-        <div className="auth-right">
-          <h2 className="auth-title">Welcome back</h2>
-          <p className="auth-subtitle">Login to continue your journey</p>
-
-          <div className="role-switcher">
-            {["user", "ngo", "admin"].map((role) => (
-              <button
-                key={role}
-                type="button"
-                onClick={() => setSelectedRole(role)}
-                className={`role-btn ${selectedRole === role ? "active" : ""}`}
-              >
-                {role === "ngo" ? "NGO" : role.charAt(0).toUpperCase() + role.slice(1)}
-              </button>
-            ))}
-          </div>
-
-          <form className="form-stack" onSubmit={handleLogin}>
-            <div>
-              <label className="field-label">Email Address</label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="input-field"
-                value={email}
-                autoComplete="email"
-                required
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label className="field-label">Password</label>
-              <div className="password-wrap">
-                <input
-                  type={showPass ? "text" : "password"}
-                  placeholder="Enter your password"
-                  className="input-field"
-                  value={password}
-                  autoComplete="current-password"
-                  required
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPass(!showPass)}
-                  className="password-toggle"
-                >
-                  {showPass ? "🙈" : "👁️"}
-                </button>
-              </div>
-            </div>
+          <AuthPasswordField
+            label="Password"
+            placeholder="Enter your password"
+            showPassword={showPass}
+            onToggle={() => setShowPass(!showPass)}
+            value={password}
+            autoComplete="current-password"
+            error={fieldErrors.password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (fieldErrors.password) {
+                setFieldErrors((prev) => ({ ...prev, password: "" }));
+              }
+            }}
+          />
 
             <div className="remember-row">
               <label className="remember-label">
@@ -150,10 +122,10 @@ export default function LoginPage() {
               <span className="divider-text">or continue with</span>
             </div>
 
-            <div className="social-grid">
-              <button type="button" className="btn-ghost social-btn">G Google</button>
-              <button type="button" className="btn-ghost social-btn">f Facebook</button>
-            </div>
+          <div className="social-grid">
+            <AuthSocialButton provider="Google" />
+            <AuthSocialButton provider="Facebook" />
+          </div>
 
             <p className="switch-text">
               Don't have an account?{" "}
@@ -162,8 +134,7 @@ export default function LoginPage() {
               </button>
             </p>
           </form>
-        </div>
-      </div>
-    </div>
+      </AuthLayout>
+    </>
   );
 }

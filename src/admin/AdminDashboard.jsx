@@ -16,6 +16,7 @@ import SectionCard from "../components/SectionCard";
 import { adminService } from "../config/services/adminService";
 import { activityService } from "../config/services/activityService";
 import { supabase } from "../config/supabaseClient";
+import "../css/UserPages.css";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -128,7 +129,7 @@ const AdminDashboard = () => {
         </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 14, marginBottom: 24 }}>
+      <div className="admin-stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 14, marginBottom: 24 }}>
         <StatCard icon="👥" label="Total Users" value={stats.users.toLocaleString()} sub="registered" color="#3B82F6" />
         <StatCard icon="🏛️" label="Registered NGOs" value={stats.ngos.toLocaleString()} sub="verified" color="#16A34A" />
         <StatCard icon="🎁" label="Total Donations" value={stats.donations.toLocaleString()} sub="all time" color="#8B5CF6" />
@@ -136,7 +137,7 @@ const AdminDashboard = () => {
         <StatCard icon="⏳" label="Pending Review" value={stats.pending.toLocaleString()} sub="need attention" color="#EF4444" />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 16 }}>
+      <div className="admin-overview-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 16 }}>
         <SectionCard
           title="Platform Overview"
           action={
@@ -218,7 +219,7 @@ const AdminDashboard = () => {
         </SectionCard>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginTop: 16 }}>
+      <div className="admin-management-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginTop: 16 }}>
         {[
           { icon: "🏢", title: "NGO Approvals", count: stats.ngos, route: "/admin/ngos", color: "#16A34A" },
           { icon: "🎁", title: "Donation Management", count: stats.donations, route: "/admin/donations", color: "#3B82F6" },

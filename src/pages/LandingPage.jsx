@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../config/context/ThemeContext";
 import ServeShareLogo from "../components/ServeShareLogo";
+import "../css/LandingPage.css";
 import {
   Sun,
   Moon,
@@ -34,9 +35,10 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg)", fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="landing-page" style={{ minHeight: "100vh", background: "var(--bg)", fontFamily: "'DM Sans', sans-serif" }}>
       {/* ── Sticky Navbar ── */}
       <nav
+        className="landing-navbar"
         style={{
           position: "sticky",
           top: 0,
@@ -56,9 +58,9 @@ export default function LandingPage() {
 
         <ServeShareLogo onClick={() => navigate("/")} />
 
-        <div style={{ flex: 1 }} />
+        <div className="landing-navbar-spacer" style={{ flex: 1 }} />
 
-        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+        <div className="landing-nav-links" style={{ display: "flex", alignItems: "center", gap: 28 }}>
           {["Home", "How It Works", "NGOs", "About", "Contact"].map((l, i) => (
             <a
               key={l}
@@ -80,7 +82,7 @@ export default function LandingPage() {
           ))}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div className="landing-nav-actions" style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <button
             onClick={toggleTheme}
             style={{
@@ -114,7 +116,7 @@ export default function LandingPage() {
 
       {/* ── Hero ── */}
       <section
-        className="hero-bg"
+        className="hero-bg landing-hero"
         style={{ padding: "80px 32px 100px", position: "relative", overflow: "hidden" }}
       >
         {/* Floating orbs */}
@@ -146,6 +148,7 @@ export default function LandingPage() {
         />
 
         <div
+          className="landing-hero-grid"
           style={{
             maxWidth: 1100,
             margin: "0 auto",
@@ -205,7 +208,7 @@ export default function LandingPage() {
               ServeShare connects generous donors with verified NGOs and communities in need. Your small act of kindness creates a lasting impact.
             </p>
 
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <div className="landing-hero-actions" style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
               <button
                 onClick={() => navigate("/register")}
                 className="btn-primary"
@@ -252,7 +255,7 @@ export default function LandingPage() {
           </div>
 
           {/* Hero visual */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+          <div className="landing-hero-visual" style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
             <div
               className="float-c"
               style={{
@@ -325,6 +328,7 @@ export default function LandingPage() {
 
       {/* ── Stats Banner ── */}
       <section
+        className="landing-stats"
         style={{
           padding: "40px 32px",
           background: "var(--surface)",
@@ -333,6 +337,7 @@ export default function LandingPage() {
         }}
       >
         <div
+          className="landing-stats-grid"
           style={{
             maxWidth: 1100,
             margin: "0 auto",
@@ -357,7 +362,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Feature Cards ── */}
-      <section style={{ padding: "80px 32px", background: "var(--bg)" }}>
+      <section className="landing-features" style={{ padding: "80px 32px", background: "var(--bg)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div className="reveal" style={{ textAlign: "center", marginBottom: 52 }}>
             <p
@@ -384,7 +389,7 @@ export default function LandingPage() {
             </h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
+          <div className="landing-features-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
             {[
               { icon: "🎁", title: "Donate Items", desc: "Donate food, clothes, books and other essentials in seconds.", color: "#16A34A" },
               { icon: "🏢", title: "Find NGOs", desc: "Discover and connect with verified NGOs near you instantly.", color: "#3B82F6" },
@@ -434,7 +439,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── How It Works ── */}
-      <section style={{ padding: "80px 32px", background: "var(--surface)" }}>
+      <section className="landing-steps" style={{ padding: "80px 32px", background: "var(--surface)" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <div className="reveal" style={{ textAlign: "center", marginBottom: 52 }}>
             <p
@@ -461,7 +466,7 @@ export default function LandingPage() {
             </h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 32, position: "relative" }}>
+          <div className="landing-steps-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 32, position: "relative" }}>
             {[
               { num: "01", icon: "📦", title: "Choose to Donate", desc: "Select items you want to donate and submit your listing." },
               { num: "02", icon: "📍", title: "We Connect", desc: "We match your donation to the nearest verified NGOs." },
@@ -516,8 +521,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Impact + Testimonial ── */}
-      <section style={{ padding: "80px 32px", background: "var(--bg)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 52, alignItems: "start" }}>
+      <section className="landing-impact" style={{ padding: "80px 32px", background: "var(--bg)" }}>
+        <div className="landing-impact-grid" style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 52, alignItems: "start" }}>
           <div className="reveal">
             <p
               style={{
@@ -607,6 +612,7 @@ export default function LandingPage() {
 
       {/* ── CTA Banner ── */}
       <section
+        className="landing-cta"
         style={{
           margin: "0 32px 80px",
           borderRadius: 28,
@@ -638,7 +644,7 @@ export default function LandingPage() {
             background: "rgba(255,255,255,0.04)",
           }}
         />
-        <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 40, flexWrap: "wrap" }}>
+        <div className="landing-cta-inner" style={{ position: "relative", display: "flex", alignItems: "center", gap: 40, flexWrap: "wrap" }}>
           <div style={{ fontSize: 60 }}>🤲</div>
           <div style={{ flex: 1 }}>
             <h3 style={{ fontSize: 28, fontWeight: 700, color: "#fff", letterSpacing: "-0.03em", marginBottom: 6 }}>
@@ -646,7 +652,7 @@ export default function LandingPage() {
             </h3>
             <p style={{ fontSize: 15, color: "rgba(255,255,255,0.8)" }}>Your kindness can change someone's tomorrow. Start today.</p>
           </div>
-          <div style={{ display: "flex", gap: 12 }}>
+          <div className="landing-cta-actions" style={{ display: "flex", gap: 12 }}>
             <button
               onClick={() => navigate("/register")}
               style={{
@@ -690,8 +696,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer style={{ background: "#0D1117", color: "#9CA3AF", padding: "56px 32px 32px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 1.2fr", gap: 40 }}>
+      <footer className="landing-footer" style={{ background: "#0D1117", color: "#9CA3AF", padding: "56px 32px 32px" }}>
+        <div className="landing-footer-grid" style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 1.2fr", gap: 40 }}>
           <div>
             <ServeShareLogo size="sm" />
             <p style={{ fontSize: 13, lineHeight: 1.7, marginTop: 14, maxWidth: 240 }}>

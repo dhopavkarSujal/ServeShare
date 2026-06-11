@@ -10,9 +10,19 @@ export default function DashboardLayout({ role = "user" }) {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 1024) {
+        setCollapsed(false);
         setMobileOpen(false);
+        return;
       }
+
+      if (window.innerWidth >= 768) {
+        setCollapsed(true);
+        setMobileOpen(false);
+        return;
+      }
+
+      setMobileOpen(false);
     };
 
     handleResize();
